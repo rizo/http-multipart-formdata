@@ -89,11 +89,12 @@ val unconsumed : reader -> Cstruct.t
     size. *)
 
 val parts :
-     boundary
+  ?read_buffer_size:int
+  -> boundary
   -> string
   -> ((field_name * (part_header * part_body)) list, string) result
-(** [parts boundary http_body] returns a list of HTTP multipart parts parsed in
-    [http_body].
+(** [parts ?read_buffer_size boundary http_body] returns a list of HTTP
+    multipart parts parsed in [http_body].
 
     The returned parts list is keyed to a form field name so that one can do:
 

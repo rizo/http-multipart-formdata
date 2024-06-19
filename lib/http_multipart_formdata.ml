@@ -348,7 +348,7 @@ let unconsumed reader = reader.unconsumed
 
 (* Non streaming *)
 
-let parts boundary body =
+let parts ?(read_buffer_size = 10) boundary body =
   let rec read_parts reader parts =
     read reader
     |> function
@@ -374,7 +374,7 @@ let parts boundary body =
     | _ -> assert false
   in
   let reader =
-    reader ~read_buffer_size:10 boundary (`Cstruct (Cstruct.of_string body))
+    reader ~read_buffer_size boundary (`Cstruct (Cstruct.of_string body))
   in
   read_parts reader (Queue.create ())
 
